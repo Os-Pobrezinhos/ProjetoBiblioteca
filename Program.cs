@@ -1,5 +1,4 @@
-﻿
-namespace ProjetoBiblioteca;
+﻿namespace ProjetoBiblioteca;
 
 class Program
 {
@@ -51,7 +50,6 @@ class Program
                 Console.WriteLine("Opção inválida! Pressione qualquer tecla para continuar.");
                 Console.ReadKey();
             }
-
         }
     }
 }
