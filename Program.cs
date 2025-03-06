@@ -1,7 +1,11 @@
-﻿namespace ProjetoBiblioteca;
+﻿using ProjetoBiblioteca.MenuLivroLeitor;
+
+namespace ProjetoBiblioteca;
 
 class Program
 {
+    static List<Leitor> leitores = new List<Leitor>();
+
     public static void Main(string[] args)
     {
         Menu();
@@ -20,7 +24,7 @@ class Program
 
             Console.WriteLine("[ 0 ] - Sair;");
             Console.WriteLine("[ 1 ] - Administrar Leitores;");
-            Console.WriteLine("[ 2 ] - Administrar Livros;");
+            Console.WriteLine("[ 2 ] - Administrar Livros de Leitor;");
             Console.Write("\nSelecione a opção desejada: ");
 
             if (int.TryParse(Console.ReadLine(), out int opcao))
@@ -29,12 +33,10 @@ class Program
                 switch (opcao)
                 {
                     case 1:
-                        MenuLeitor menuLeitor = new MenuLeitor();
-                        menuLeitor.exibir();
+                        new MenuLeitor().exibir(leitores);
                         break;
                     case 2:
-                        MenuLivro menuLivro = new MenuLivro();
-                        menuLivro.exibir();
+                        new MenuLivroLeitor.MenuLivroLeitor().exibir(leitores);
                         break;
                     case 0:
                         Console.WriteLine("Finalizando o sistema;");

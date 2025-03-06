@@ -2,10 +2,7 @@ namespace ProjetoBiblioteca;
 
 public class MenuLeitor
 {
-    private List<Leitor> leitores = new List<Leitor>();
-    private List<Livro> livros = new List<Livro>();
-
-    public void exibir()
+    public void exibir(List<Leitor> leitores)
     {
         bool running = true;
         while (running)
@@ -30,19 +27,19 @@ public class MenuLeitor
                 switch (opcao)
                 {
                     case 1:
-                        ListarLeitores();
+                        ListarLeitores(leitores);
                         break;
                     case 2:
-                        PesquisarLeitorPorCPF();
+                        PesquisarLeitorPorCPF(leitores);
                         break;
                     case 3:
-                        RegistrarLeitor();
+                        RegistrarLeitor(leitores);
                         break;
                     case 4:
-                        EditarLeitor();
+                        EditarLeitor(leitores);
                         break;
                     case 5:
-                        RemoverLeitor();
+                        RemoverLeitor(leitores);
                         break;
                     case 0:
                         Console.WriteLine("Voltando ao menu principal;");
@@ -60,14 +57,21 @@ public class MenuLeitor
             }
         }
     }
+    private Leitor BuscarLeitorPorCPF(List<Leitor> leitores)
+    {
+        Console.Write("Digite o CPF do leitor: ");
+        string cpf = Console.ReadLine()?.Trim() ?? "";
 
-    private void ListarLeitores()
+        return leitores.Find(l => l.CPF == cpf);
+    }
+
+    private void ListarLeitores(List<Leitor> leitores)
     {
         if (leitores.Count > 0)
         {
             foreach (var leitor in leitores)
             {
-                leitor.ExibirInformacoes();
+                leitor.ExibirLeitores();
                 Console.WriteLine();
             }
         }
@@ -79,16 +83,13 @@ public class MenuLeitor
         Console.ReadKey();
     }
 
-    private void PesquisarLeitorPorCPF()
+    private void PesquisarLeitorPorCPF(List<Leitor> leitores)
     {
-        Console.Write("Digite o CPF do leitor: ");
-        string cpf = Console.ReadLine()?.Trim() ?? "";
+        var leitor = BuscarLeitorPorCPF(leitores);
 
-        var leitor = leitores.Find(l => l.CPF == cpf);
-        
         if (leitor != null)
         {
-            leitor.ExibirInformacoes();
+            leitor.ExibirLeitores();
         }
         else
         {
@@ -98,7 +99,7 @@ public class MenuLeitor
         Console.ReadKey();
     }
 
-    private void RegistrarLeitor()
+    private void RegistrarLeitor(List<Leitor> leitores)
     {
         string cpf;
         bool cpfValido;
@@ -136,13 +137,10 @@ public class MenuLeitor
         Console.ReadKey();
     }
 
-    private void EditarLeitor()
+    private void EditarLeitor(List<Leitor> leitores)
     {
-        Console.Write("Digite o CPF do leitor que deseja editar: ");
-        string cpf = Console.ReadLine()?.Trim() ?? "";
-        
-        var leitor = leitores.Find(l => l.CPF == cpf);
-        
+        var leitor = BuscarLeitorPorCPF(leitores);
+
         if (leitor != null)
         {
             Console.Write("Digite o novo nome do leitor: ");
@@ -162,12 +160,10 @@ public class MenuLeitor
         Console.ReadKey();
     }
 
-    private void RemoverLeitor()
+    private void RemoverLeitor(List<Leitor> leitores)
     {
-        Console.Write("Digite o CPF do leitor que deseja remover: ");
-        string cpf = Console.ReadLine()?.Trim() ?? "";
-        
-        var leitor = leitores.Find(l => l.CPF == cpf);
+        var leitor = BuscarLeitorPorCPF(leitores);
+
         if (leitor != null)
         {
             leitores.Remove(leitor);

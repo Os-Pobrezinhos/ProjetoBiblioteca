@@ -20,52 +20,33 @@ namespace ProjetoBiblioteca
             Livros.Add(livro);
         }
 
-        public void RemoverLivro(int indice)
+        public void RemoverLivro(string titulo)
         {
-            if (indice >= 0 && indice < Livros.Count)
+            var livro = BuscarLivroPorTitulo(titulo);
+
+            if (livro != null)
             {
-                Livros.RemoveAt(indice);
+                Livros.Remove(livro);
             }
         }
 
-        public void EditarLivro(int indice, string novoTitulo, string novoAutor, int novoAno)
+        public void EditarLivro(string tituloLivro, Livro novoLivro)
         {
-            if (indice >= 0 && indice < Livros.Count)
-            {
-                if (!string.IsNullOrWhiteSpace(novoTitulo))
-                    Livros[indice].Titulo = novoTitulo;
+            var livro = BuscarLivroPorTitulo(tituloLivro);
 
-                if (!string.IsNullOrWhiteSpace(novoAutor))
-                    Livros[indice].Autor = novoAutor;
-
-                if (novoAno > 0)
-                    Livros[indice].AnoPublicacao = novoAno;
-            }
+            Livros[Livros.IndexOf(livro)] = novoLivro;
         }
 
-        public List<Livro> BuscarLivroPorTitulo(string titulo)
+        public Livro BuscarLivroPorTitulo(string titulo)
         {
-            return Livros.Where(l => l.Titulo.ToLower().Contains(titulo.ToLower())).ToList();
+            return Livros.Where(l => l.Titulo.ToLower().Contains(titulo.ToLower())).FirstOrDefault();
         }
 
-        public void ExibirInformacoes()
+        public void ExibirLeitores()
         {
             Console.WriteLine($"CPF: {CPF}");
             Console.WriteLine($"Nome: {Nome}");
             Console.WriteLine($"Email: {Email}");
-
-            if (Livros.Count > 0)
-            {
-                Console.WriteLine("Livros:");
-                for (int i = 0; i < Livros.Count; i++)
-                {
-                    Console.WriteLine($"  {i + 1}. {Livros[i].Titulo} ({Livros[i].Autor}, {Livros[i].AnoPublicacao})");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Nenhum livro cadastrado para este leitor.");
-            }
         }
 
         public void ListarLivros()
