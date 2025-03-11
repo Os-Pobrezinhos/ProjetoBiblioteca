@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Uniplac\\TioLu\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj": {}
+    "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj": {}
   },
   "projects": {
-    "D:\\Uniplac\\TioLu\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj": {
+    "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Uniplac\\TioLu\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj",
+        "projectUniqueName": "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj",
         "projectName": "ProjetoBiblioteca",
-        "projectPath": "D:\\Uniplac\\TioLu\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj",
-        "packagesPath": "C:\\Users\\cliente\\.nuget\\packages\\",
-        "outputPath": "D:\\Uniplac\\TioLu\\ProjetoBiblioteca\\obj\\",
+        "projectPath": "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj",
+        "packagesPath": "C:\\Users\\Cunha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\cliente\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Cunha\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

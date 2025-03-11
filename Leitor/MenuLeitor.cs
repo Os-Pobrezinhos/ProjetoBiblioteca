@@ -108,11 +108,16 @@ public class MenuLeitor
             Console.Write("Digite o CPF do leitor: ");
             cpf = Console.ReadLine()?.Trim() ?? "";
             cpfValido = !string.IsNullOrWhiteSpace(cpf) && !leitores.Exists(l => l.CPF == cpf);
-            
+
             if (!cpfValido)
             {
                 if (string.IsNullOrWhiteSpace(cpf)) Console.WriteLine("CPF não pode ser vazio!");
                 else Console.WriteLine("CPF já cadastrado!");
+            }
+            else if (cpf.Length != 11)
+            {
+                Console.WriteLine("CPF deve conter 11 digitos!");
+                cpfValido = false;
             }
         } while (!cpfValido);
 
