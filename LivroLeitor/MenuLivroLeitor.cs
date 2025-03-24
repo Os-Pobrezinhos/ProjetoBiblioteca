@@ -61,19 +61,11 @@
                 }
             }
         }
-        private Leitor BuscarLeitorPorCPF(List<Leitor> leitores, string tipo)
+
+        private Leitor? BuscarLeitorPorCPF(List<Leitor> leitores, string tipo = "")
         {
             Console.Write($"Digite o CPF do leitor {tipo}: ");
             string cpf = Console.ReadLine()?.Trim() ?? "";
-
-            return leitores.Find(l => l.CPF == cpf);
-        }
-        
-        private Leitor BuscarLeitorPorCPF(List<Leitor> leitores)
-        {
-            Console.Write($"Digite o CPF do leitor: ");
-            string cpf = Console.ReadLine()?.Trim() ?? "";
-
             return leitores.Find(l => l.CPF == cpf);
         }
 
@@ -83,8 +75,9 @@
             {
                 foreach (var leitor in leitores)
                 {
-                    leitor.ExibirLeitores();
-                    leitor.ListarLivros();
+                    Console.WriteLine(leitor.ExibirLeitores());
+                    foreach (var livro in leitor.ListarLivros())
+                        Console.WriteLine("  " + livro);
                 }
             }
             else
@@ -98,20 +91,10 @@
         private void PesquisarLivrosPorCPF(List<Leitor> leitores)
         {
             var leitor = BuscarLeitorPorCPF(leitores);
-
             if (leitor != null)
             {
-                if (leitor.Livros.Count > 0)
-                {
-                    foreach (var livro in leitor.Livros)
-                    {
-                        leitor.ListarLivros();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("O leitor não possui livros cadastrados.");
-                }
+                foreach (var livro in leitor.ListarLivros())
+                    Console.WriteLine(livro);
             }
             else
             {
@@ -127,90 +110,46 @@
 
             if (leitor != null)
             {
-                string titulo;
-                do
+                try
                 {
+                    Console.Write("Digite o ISBN do livro: ");
+                    string isbn = Console.ReadLine()?.Trim() ?? "";
+
                     Console.Write("Digite o título do livro: ");
-                    titulo = Console.ReadLine()?.Trim() ?? "";
-                    if (string.IsNullOrWhiteSpace(titulo)) Console.WriteLine("Título não pode ser vazio!");
-                } while (string.IsNullOrWhiteSpace(titulo));
+                    string titulo = Console.ReadLine()?.Trim() ?? "";
 
-                string autor;
-                do
-                {
-                    Console.Write("Digite o autor do livro: ");
-                    autor = Console.ReadLine()?.Trim() ?? "";
-                    if (string.IsNullOrWhiteSpace(autor)) Console.WriteLine("Autor não pode ser vazio!");
-                } while (string.IsNullOrWhiteSpace(autor));
+                    Console.Write("Digite o subtítulo do livro: ");
+                    string subtitulo = Console.ReadLine()?.Trim() ?? "";
 
-                int anoPublicacao;
-                bool anoValido;
-                do
-                {
-                    Console.Write("Digite o ano de publicação do livro: ");
-                    string input = Console.ReadLine()?.Trim() ?? "";
-                    anoValido = int.TryParse(input, out anoPublicacao) && anoPublicacao > 0;
-                    if (!anoValido) Console.WriteLine("Ano inválido! Deve ser um número positivo.");
-                } while (!anoValido);
+                    Console.Write("Digite o escritor: ");
+                    string escritor = Console.ReadLine()?.Trim() ?? "";
 
-                leitor.AdicionarLivro(new Livro(titulo, autor, anoPublicacao));
-                Console.WriteLine("Livro cadastrado com sucesso!");
-            }
-            else
-            {
-                Console.WriteLine("Leitor não encontrado.");
-            }
-            Console.ReadKey();
-        }
+                    Console.Write("Digite a editora: ");
+                    string editora = Console.ReadLine()?.Trim() ?? "";
 
-        private void EditarLivroDeLeitor(List<Leitor> leitores)
-        {
-            var leitor = BuscarLeitorPorCPF(leitores);
+                    Console.Write("Digite o gênero: ");
+                    string genero = Console.ReadLine()?.Trim() ?? "";
 
-            if (leitor != null)
-            {
-                Console.Write("Digite o título do livro que deseja editar: ");
-                string titulo = Console.ReadLine()?.Trim() ?? "";
-                var livro = leitor.BuscarLivroPorTitulo(titulo);
+                    Console.Write("Digite o tipo da capa: ");
+                    string tipoCapa = Console.ReadLine()?.Trim() ?? "";
 
-                if (livro != null)
-                {
-                    Console.Write($"Novo título (atual: {livro.Titulo}): ");
-                    string novoTitulo = Console.ReadLine()?.Trim() ?? "";
-                    if (!string.IsNullOrWhiteSpace(novoTitulo)) livro.Titulo = novoTitulo;
+                    Console.Write("Digite o ano de publicação: ");
+                    if (!int.TryParse(Console.ReadLine(), out int ano))
+                        throw new ArgumentException("Ano inválido!");
 
-                    Console.Write($"Novo autor (atual: {livro.Autor}): ");
-                    string novoAutor = Console.ReadLine()?.Trim() ?? "";
-                    if (!string.IsNullOrWhiteSpace(novoAutor)) livro.Autor = novoAutor;
+                    Console.Write("Digite o número de páginas: ");
+                    if (!int.TryParse(Console.ReadLine(), out int paginas))
+                        throw new ArgumentException("Número de páginas inválido!");
 
-                    int novoAno;
-                    bool anoValido;
-                    do
-                    {
-                        Console.Write($"Novo ano (atual: {livro.AnoPublicacao}): ");
-                        string input = Console.ReadLine()?.Trim() ?? "";
-                        anoValido = int.TryParse(input, out novoAno) && novoAno > 0;
-                        if (!string.IsNullOrWhiteSpace(input) && !anoValido)
-                            Console.WriteLine("Ano inválido! Mantendo o valor atual.");
-                        else if (string.IsNullOrWhiteSpace(input))
-                            anoValido = true;
-                    } while (!anoValido);
+                    var livro = new Livro(isbn, titulo, subtitulo, escritor, editora, genero, ano, tipoCapa, paginas);
+                    leitor.AdicionarLivro(livro);
 
-                    if (novoAno > 0) livro.AnoPublicacao = novoAno;
-
-                    leitor.EditarLivro(livro.Titulo, 
-                        new Livro(
-                            novoTitulo, 
-                            novoAutor, 
-                            novoAno
-                            ));
-                    Console.WriteLine("Livro editado com sucesso!");
+                    Console.WriteLine("Livro cadastrado com sucesso!");
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Livro não encontrado.");
+                    Console.WriteLine($"Erro ao cadastrar livro: {ex.Message}");
                 }
-                Console.ReadKey();
             }
             else
             {
@@ -227,16 +166,14 @@
             {
                 Console.Write("Digite o título do livro que deseja remover: ");
                 string titulo = Console.ReadLine()?.Trim() ?? "";
-                var livro = leitor.BuscarLivroPorTitulo(titulo);
-
-                if (livro != null)
+                try
                 {
-                    leitor.RemoverLivro(livro.Titulo);
+                    leitor.RemoverLivro(titulo);
                     Console.WriteLine("Livro removido com sucesso!");
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Livro não encontrado.");
+                    Console.WriteLine($"Erro: {ex.Message}");
                 }
             }
             else
@@ -265,17 +202,28 @@
             Console.Write("Digite o título do livro que deseja doar: ");
             string titulo = Console.ReadLine()?.Trim() ?? "";
 
-            var livro = doador.BuscarLivroPorTitulo(titulo);
-            if (livro == null)
+            try
             {
-                Console.WriteLine("Livro não encontrado na posse do doador.");
-                return;
+                var livro = doador.BuscarLivroPorTitulo(titulo);
+                if (livro == null)
+                    throw new ArgumentException("Livro não encontrado na posse do doador.");
+
+                doador.RemoverLivro(titulo);
+                recebedor.AdicionarLivro(livro);
+
+                Console.WriteLine($"O livro '{livro.Titulo}' foi doado de {doador.Nome} para {recebedor.Nome}.");
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao doar livro: {ex.Message}");
+            }
+            Console.ReadKey();
+        }
 
-            doador.RemoverLivro(titulo);
-            recebedor.AdicionarLivro(livro);
-
-            Console.WriteLine($"O livro '{livro.Titulo}' foi doado de {doador.Nome} para {recebedor.Nome}.");
+        private void EditarLivroDeLeitor(List<Leitor> leitores)
+        {
+            Console.WriteLine("(Funcionalidade não implementada pois o ISBN é imutável e criar novo objeto pode confundir a lógica. Recomenda-se remover e cadastrar novamente caso deseje editar.)");
+            Console.ReadKey();
         }
     }
 }
