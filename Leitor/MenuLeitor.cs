@@ -57,11 +57,11 @@ public class MenuLeitor
             }
         }
     }
-    private Leitor BuscarLeitorPorCPF(List<Leitor> leitores)
+
+    private Leitor? BuscarLeitorPorCPF(List<Leitor> leitores)
     {
         Console.Write("Digite o CPF do leitor: ");
         string cpf = Console.ReadLine()?.Trim() ?? "";
-
         return leitores.Find(l => l.CPF == cpf);
     }
 
@@ -71,7 +71,11 @@ public class MenuLeitor
         {
             foreach (var leitor in leitores)
             {
-                leitor.ExibirLeitores();
+                Console.WriteLine(leitor.ExibirLeitores());
+                foreach (var livro in leitor.ListarLivros())
+                {
+                    Console.WriteLine("  " + livro);
+                }
                 Console.WriteLine();
             }
         }
@@ -79,6 +83,7 @@ public class MenuLeitor
         {
             Console.WriteLine("Nenhum leitor cadastrado.");
         }
+
         Console.WriteLine("\nPressione qualquer tecla para continuar...");
         Console.ReadKey();
     }
@@ -89,56 +94,49 @@ public class MenuLeitor
 
         if (leitor != null)
         {
-            leitor.ExibirLeitores();
+            Console.WriteLine(leitor.ExibirLeitores());
+            foreach (var livro in leitor.ListarLivros())
+            {
+                Console.WriteLine("  " + livro);
+            }
         }
         else
         {
             Console.WriteLine("Leitor não encontrado.");
         }
+
         Console.WriteLine("\nPressione qualquer tecla para continuar...");
         Console.ReadKey();
     }
 
     private void RegistrarLeitor(List<Leitor> leitores)
     {
-        string cpf;
-        bool cpfValido;
-        do
+        try
         {
             Console.Write("Digite o CPF do leitor: ");
-            cpf = Console.ReadLine()?.Trim() ?? "";
-            cpfValido = !string.IsNullOrWhiteSpace(cpf) && !leitores.Exists(l => l.CPF == cpf);
+            string cpf = Console.ReadLine()?.Trim() ?? "";
 
-            if (!cpfValido)
-            {
-                if (string.IsNullOrWhiteSpace(cpf)) Console.WriteLine("CPF não pode ser vazio!");
-                else Console.WriteLine("CPF já cadastrado!");
-            }
-            else if (cpf.Length != 11)
-            {
-                Console.WriteLine("CPF deve conter 11 digitos!");
-                cpfValido = false;
-            }
-        } while (!cpfValido);
-
-        string nome;
-        do
-        {
             Console.Write("Digite o nome do leitor: ");
-            nome = Console.ReadLine()?.Trim() ?? "";
-            if (string.IsNullOrWhiteSpace(nome)) Console.WriteLine("Nome não pode ser vazio!");
-        } while (string.IsNullOrWhiteSpace(nome));
+            string nome = Console.ReadLine()?.Trim() ?? "";
 
-        string email;
-        do
-        {
             Console.Write("Digite o email do leitor: ");
-            email = Console.ReadLine()?.Trim() ?? "";
-            if (string.IsNullOrWhiteSpace(email)) Console.WriteLine("Email não pode ser vazio!");
-        } while (string.IsNullOrWhiteSpace(email));
+            string email = Console.ReadLine()?.Trim() ?? "";
 
-        leitores.Add(new Leitor(cpf, nome, email));
-        Console.WriteLine("Leitor cadastrado com sucesso!");
+            Console.Write("Digite a idade do leitor: ");
+            string idadeStr = Console.ReadLine() ?? "";
+            if (!int.TryParse(idadeStr, out int idade))
+                throw new ArgumentException("Idade inválida!");
+
+            var novoLeitor = new Leitor(cpf, nome, email, idade);
+            leitores.Add(novoLeitor);
+
+            Console.WriteLine("Leitor cadastrado com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao cadastrar leitor: {ex.Message}");
+        }
+
         Console.ReadKey();
     }
 
@@ -148,20 +146,30 @@ public class MenuLeitor
 
         if (leitor != null)
         {
-            Console.Write("Digite o novo nome do leitor: ");
-            string novoNome = Console.ReadLine()?.Trim() ?? "";
-            if (!string.IsNullOrWhiteSpace(novoNome)) leitor.Nome = novoNome;
+            try
+            {
+                Console.Write("Digite o novo nome do leitor: ");
+                string novoNome = Console.ReadLine()?.Trim() ?? "";
+                if (!string.IsNullOrWhiteSpace(novoNome))
+                    leitor.Nome = novoNome;
 
-            Console.Write("Digite o novo email do leitor: ");
-            string novoEmail = Console.ReadLine()?.Trim() ?? "";
-            if (!string.IsNullOrWhiteSpace(novoEmail)) leitor.Email = novoEmail;
+                Console.Write("Digite o novo email do leitor: ");
+                string novoEmail = Console.ReadLine()?.Trim() ?? "";
+                if (!string.IsNullOrWhiteSpace(novoEmail))
+                    leitor.Email = novoEmail;
 
-            Console.WriteLine("Leitor editado com sucesso!");
+                Console.WriteLine("Leitor editado com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao editar leitor: {ex.Message}");
+            }
         }
         else
         {
             Console.WriteLine("Leitor não encontrado.");
         }
+
         Console.ReadKey();
     }
 
@@ -178,6 +186,7 @@ public class MenuLeitor
         {
             Console.WriteLine("Leitor não encontrado.");
         }
+
         Console.ReadKey();
     }
 }
