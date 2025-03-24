@@ -8,7 +8,14 @@ class Program
 
     public static void Main(string[] args)
     {
-        Menu();
+        try
+        {
+            Menu();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro inesperado: {ex.Message}");
+        }
     }
 
     public static void Menu()
@@ -39,7 +46,7 @@ class Program
                         new MenuLivroLeitor.MenuLivroLeitor().exibir(leitores);
                         break;
                     case 0:
-                        Console.WriteLine("Finalizando o sistema;");
+                        Console.WriteLine("Finalizando o sistema...");
                         running = false;
                         break;
                     default:
