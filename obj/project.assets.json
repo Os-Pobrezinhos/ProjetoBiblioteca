@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Cunha\\.nuget\\packages\\": {}
+    "C:\\Users\\dispo\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj",
+      "projectUniqueName": "C:\\Users\\dispo\\OneDrive\\Documentos\\ProjetoBiblioteca-main\\ProjetoBiblioteca.csproj",
       "projectName": "ProjetoBiblioteca",
-      "projectPath": "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\ProjetoBiblioteca.csproj",
-      "packagesPath": "C:\\Users\\Cunha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Cunha\\Documents\\Uniplac\\Desenvolvimento de Sistemas\\ProjetoBiblioteca\\obj\\",
+      "projectPath": "C:\\Users\\dispo\\OneDrive\\Documentos\\ProjetoBiblioteca-main\\ProjetoBiblioteca.csproj",
+      "packagesPath": "C:\\Users\\dispo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\dispo\\OneDrive\\Documentos\\ProjetoBiblioteca-main\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Cunha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\dispo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -65,7 +65,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
